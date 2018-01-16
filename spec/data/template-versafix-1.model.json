@@ -16,7 +16,7 @@
       "size": null,
       "decoration": null
     },
-    "preheaderLinkOption": "[unsubscribe_link]",
+    "preheaderLinkOption": "[UNSUBSCRIBE]",
     "longTextStyle": {
       "type": "longTextStyle",
       "face": null,
@@ -29,7 +29,7 @@
   },
   "sponsor": {
     "type": "sponsor",
-    "visible": true,
+    "visible": false,
     "src": "img/sponsor.gif",
     "url": "",
     "alt": "sponsor"
