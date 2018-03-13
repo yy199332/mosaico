@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no" />
-  <title style="-ko-bind-text: @titleText">TITLE</title>
+  <title style="-ko-bind-text: @titleText">Base Template</title>
   <style type="text/css">
     @supports -ko-blockdefs {
       id { widget: id }
@@ -45,7 +45,7 @@
       preheaderLinkOption {
         label: Unsubscribe Link;
         widget: select;
-        options: [profile_link]=Profile|[unsubscribe_link]=Unsubscribe|none=None;
+        options: [profile_link]=Profile|[UNSUBSCRIBE]=Unsubscribe|none=None;
         help: If -None- is selected, preHeader text will be shown;
       }
 
@@ -67,6 +67,8 @@
       linkStyle:preview { -ko-bind-text: @['Link']; -ko-font-size: @[size]px; -ko-font-family: @face; -ko-color: @color; -ko-text-decoration: @[decoration] }
       longTextStyle { label: Paragraph; properties: face color size linksColor   }
       longTextStyle:preview { -ko-bind-text: @['AaZz']; -ko-font-family: @face; -ko-color: @color; -ko-font-size: @[size]px; }
+      navStyle { label: Nav; properties: face color size linksColor   }
+      navStyle:preview { -ko-bind-text: @['AaZz']; -ko-font-family: @face; -ko-color: @color; -ko-font-size: @[size]px; }
       bigButtonStyle { label: Big Button; extend: buttonStyle }
       titleTextStyle { label: Title; extend: textStyle }
       /* background */
@@ -107,7 +109,7 @@
       frameTheme:preview { -ko-background-color: @[backgroundColor] }
       template preheaderText { label: Preheader; }
 
-      template { label: Page; theme: frameTheme ;properties:  preheaderVisible=true; version: 1.0.6; }
+      template { label: Page; theme: frameTheme ;properties:  preheaderVisible=false; version: 1.0.6; }
 
       footerBlock { label: Unsubscribe Block; theme: frameTheme }
 
@@ -143,6 +145,7 @@
       sideArticleBlock { label: Image+Text Block; properties: backgroundColor titleVisible=true buttonVisible=true imageWidth=166 imagePos=left titleTextStyle longTextStyle buttonStyle  image  longText buttonLink; variant:imagePos; theme: contentTheme }
 
       textBlock { label: Text Block; properties: backgroundColor longTextStyle longText; theme: contentTheme}
+      navBlock { label: Nav Block; properties: backgroundColor navStyle longText; theme: contentTheme}
 
       singleArticleBlock { label: Image/Text Block; properties: backgroundColor titleVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  image  longText buttonLink;theme: contentTheme}
 
@@ -150,8 +153,8 @@
 
       tripleArticleBlock { label: 3 Columns Block; properties: backgroundColor titleVisible=true buttonVisible=true imageVisible=true titleTextStyle longTextStyle buttonStyle  leftImage  leftLongText leftButtonLink middleImage  middleLongText middleButtonLink rightImage  rightLongText rightButtonLink; theme: contentTheme}
 
-      logoBlock imageWidth { label: Image Size; widget: select; options: 166=Small|258=Medium|350=Big; variant:imageWidth;}
-      logoBlock { label: Logo Block; properties: image imageWidth=258; variant: imageWidth; theme: contentTheme}
+      logoBlock imageWidth { label: Image Size; widget: select; options: 166=Small|258=Medium|570=Big; variant:imageWidth;}
+      logoBlock { label: Logo Block; properties: image imageWidth=570; variant: imageWidth; theme: contentTheme}
 
       titleBlock { label: Title; theme: contentTheme}
 
@@ -181,6 +184,7 @@
       hrBlock:preview,
       sideArticleBlock:preview,
       textBlock:preview,
+      navBlock:preview,
       singleArticleBlock:preview,
       doubleArticleBlock:preview,
       tripleArticleBlock:preview,
@@ -249,7 +253,7 @@
     .vb-outer { min-width: 0 !important; }
     .RMsgBdy, .ExternalClass {
       width: 100%;
-      background-color: #3f3f3f;
+      background-color: #ffffff;
       -ko-background-color: @[_theme_.frameTheme.backgroundColor]
     }
 
@@ -330,6 +334,30 @@
     [data-ko-block=textBlock] .long-text p:last-child { Margin-bottom: 0px; }
     [data-ko-block=textBlock] .long-text p:first-child { Margin-top: 0px; }
 
+    [data-ko-block=navBlock] a,
+    [data-ko-block=navBlock] a:link,
+    [data-ko-block=navBlock] a:visited,
+    [data-ko-block=navBlock] a:hover {
+      color: #3EA0DA;
+
+      text-decoration: none;
+    }
+    [data-ko-block=navBlock] .long-text p { Margin: 1em 0px; }
+    [data-ko-block=navBlock] .long-text p:last-child { Margin-bottom: 0px; }
+    [data-ko-block=navBlock] .long-text p:first-child { Margin-top: 0px; }
+
+    [data-ko-block=navTitleBlock] .links-color a,
+    [data-ko-block=navTitleBlock] .links-color a:link,
+    [data-ko-block=navTitleBlock] .links-color a:visited,
+    [data-ko-block=navTitleBlock] .links-color a:hover {
+      color: #3EA0DA;
+
+      text-decoration: none;
+    }
+    [data-ko-block=navTitleBlock] .long-text p { Margin: 1em 0px; }
+    [data-ko-block=navTitleBlock] .long-text p:last-child { Margin-bottom: 0px; }
+    [data-ko-block=navTitleBlock] .long-text p:first-child { Margin-top: 0px; }
+
     [data-ko-block=sideArticleBlock] .links-color a,
     [data-ko-block=sideArticleBlock] .links-color a:link,
     [data-ko-block=sideArticleBlock] .links-color a:visited,
@@ -359,7 +387,6 @@
     [data-ko-block=footerBlock] .links-color a:visited,
     [data-ko-block=footerBlock] .links-color a:hover {
       color: #cccccc;
-      -ko-color: @longTextStyle.linksColor;
       text-decoration: underline;
     }
     [data-ko-block=footerBlock] .long-text p { Margin: 1em 0px; }
@@ -392,7 +419,7 @@
     }
   </style>
 </head>
-<body bgcolor="#3f3f3f" text="#919191" alink="#cccccc" vlink="#cccccc" style="background-color: #3f3f3f; color: #919191;
+<body bgcolor="#ffffff" text="#919191" alink="#cccccc" vlink="#cccccc" style="background-color: #ffffff; color: #919191;
   -ko-background-color: @_theme_.frameTheme.backgroundColor; -ko-attr-bgcolor: @_theme_.frameTheme.backgroundColor; -ko-color: @_theme_.frameTheme.longTextStyle.color;
   -ko-attr-text: @_theme_.frameTheme.longTextStyle.color; -ko-attr-alink: @_theme_.frameTheme.longTextStyle.linksColor;
   -ko-attr-vlink: @_theme_.frameTheme.longTextStyle.linksColor">
@@ -402,20 +429,20 @@
   <!-- preheaderBlock -->
   <div data-ko-display="preheaderVisible" data-ko-wrap="false">
 
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#3f3f3f"
-    style="background-color: #3f3f3f; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor" data-ko-block="preheaderBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor" data-ko-block="preheaderBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#3f3f3f"
-        style="background-color: #3f3f3f; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor">
         <div style="display: none; font-size:1px; color: #333333; line-height: 1px; max-height:0px; max-width: 0px; opacity: 0; overflow: hidden;
           -ko-bind-text: @preheaderText"></div>
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
-        <table width="570" border="0" cellpadding="0" cellspacing="0" class="vb-row halfpad" bgcolor="#3f3f3f"
-          style="width: 100%; max-width: 570px; background-color: #3f3f3f; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
+        <table width="570" border="0" cellpadding="0" cellspacing="0" class="vb-row halfpad" bgcolor="#ffffff"
+          style="width: 100%; max-width: 570px; background-color: #ffffff; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
           <tr>
-            <td align="center" valign="top" bgcolor="#3f3f3f" style="font-size: 0; background-color: #3f3f3f;
+            <td align="center" valign="top" bgcolor="#ffffff" style="font-size: 0; background-color: #ffffff;
               -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor" align="left">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="552"><tr><![endif]-->
@@ -424,10 +451,10 @@
                     <table class="vb-content" border="0" cellspacing="9" cellpadding="0" width="276" style="width: 100%;" align="left">
                       <tr>
                         <td width="100%" valign="top" align="left" style="font-weight: normal; text-align:left; font-size: 13px;
-                          font-family: Arial, Helvetica, sans-serif; color: #ffffff;
+                          font-family: Arial, Helvetica, sans-serif; color: #000;
                           -ko-font-size: @[linkStyle.size]px; -ko-color: @linkStyle.color; -ko-font-family: @linkStyle.face">
-                          <a data-ko-display="preheaderLinkOption neq 'none'" data-ko-editable="unsubscribeText" href="[unsubscribe_link]"
-                             style="text-decoration: underline; color: #ffffff; -ko-attr-href: @preheaderLinkOption;
+                          <a data-ko-display="preheaderLinkOption neq 'none'" data-ko-editable="unsubscribeText" href="[UNSUBSCRIBE]"
+                             style="text-decoration: none; color: #000; -ko-attr-href: @preheaderLinkOption;
                              -ko-color: @linkStyle.color; -ko-text-decoration: @linkStyle.decoration">Unsubscribe</a>
                           <span data-ko-display="preheaderLinkOption eq 'none'" style="font-size: 13px;color: #919191; font-weight: normal; text-align:center;
                             font-family: Arial, Helvetica, sans-serif; -ko-font-size: @[longTextStyle.size]px; -ko-color: @longTextStyle.color;
@@ -441,12 +468,12 @@
 
                     <table class="vb-content" border="0" cellspacing="9" cellpadding="0" width="276" style="width: 100%; text-align: right;" align="left">
                       <tr>
-                        <td width="100%" valign="top" style="font-weight: normal;  font-size: 13px; font-family: Arial, Helvetica, sans-serif; color: #ffffff;
+                        <td width="100%" valign="top" style="font-weight: normal;  font-size: 13px; font-family: Arial, Helvetica, sans-serif; color: #000;
                       -ko-font-size: @[linkStyle.size]px; -ko-color: @linkStyle.color; -ko-font-family: @linkStyle.face">
-                      <span style="color: #ffffff; text-decoration: underline;
+                      <span style="color: #000; text-decoration: none;
                         -ko-color: @linkStyle.color; -ko-text-decoration: @linkStyle.decoration">
                           <a data-ko-editable="webversionText" href="[show_link]"
-                          style="text-decoration: underline; color: #ffffff;
+                          style="text-decoration: none; color: #000;
                            -ko-color: @linkStyle.color; -ko-text-decoration: @linkStyle.decoration">View in your browser</a>
                          </span>
                        </td>
@@ -471,26 +498,26 @@
   <div data-ko-container="main" data-ko-wrap="false">
 
   <!-- logoBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="logoBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="logoBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
-        <table width="570" style="width: 100%; max-width: 570px" border="0" cellpadding="0" cellspacing="18" class="vb-container fullpad">
+        <table width="570" style="width: 100%; max-width: 570px" border="0" cellpadding="0" cellspacing="0" class="vb-container fullwidth">
           <tr>
             <td valign="top" align="center">
 
-<!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="258" style="-ko-attr-width: @[imageWidth]"><tr><td align="center" valign="top"><![endif]-->
-<div style="display:inline-block; max-width:258px; -ko-max-width: @[imageWidth]px; vertical-align:top; width:100%;" class="mobile-full">
+<!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570" style="-ko-attr-width: @[imageWidth]"><tr><td align="center" valign="top"><![endif]-->
+<div style="display:inline-block; max-width:570px; -ko-max-width: @[imageWidth]px; vertical-align:top; width:100%;" class="mobile-full">
                     <a data-ko-link="image.url" href="" style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; color: #f3f3f3;
                       text-decoration: none; -ko-font-size: @[externalTextStyle.size]px;
                       -ko-font-family: @externalTextStyle.face; -ko-color: @externalTextStyle.color"><img
-                       data-ko-editable="image.src" width="258" data-ko-placeholder-height="150"
-                        style="-ko-attr-alt: @image.alt; width: 100%; max-width: 258px; -ko-attr-width: @imageWidth; -ko-max-width: @[imageWidth]px;"
-                        src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C150" vspace="0" hspace="0" border="0" alt="" /></a>
+                       data-ko-editable="image.src" width="570" data-ko-placeholder-height="200"
+                        style="-ko-attr-alt: @image.alt; width: 100%; max-width: 570px; -ko-attr-width: @imageWidth; -ko-max-width: @[imageWidth]px;"
+                        src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=570%2C200" vspace="0" hspace="0" border="0" alt="" /></a>
 </div>
 <!--[if (gte mso 9)|(lte ie 8)]></td></tr></table><![endif]-->
 
@@ -506,11 +533,11 @@
   <!-- /logoBlock  -->
 
   <!-- sideArticleBlock  -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="sideArticleBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="sideArticleBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -530,7 +557,7 @@
                           <a data-ko-link="image.url" href="">
                             <img data-ko-editable="image.src" border="0" hspace="0" vspace="0" width="166"
                               data-ko-placeholder-height="130" class="mobile-full" alt=""
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C130"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C130"
                               style="vertical-align: top; width: 100%; height: auto; -ko-attr-width: @imageWidth; max-width: 166px; -ko-max-width: @[imageWidth]px; -ko-attr-alt: @image.alt" />
                           </a>
                         </td>
@@ -562,9 +589,9 @@
                         <td valign="top">
                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
                             <tr>
-                              <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                              <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                                padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                                padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                                 -ko-border-radius: @[buttonStyle.radius]px;
                                 -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                                 -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color;">
@@ -586,7 +613,7 @@
                         <td width="100%" valign="top" align="left" class="links-color">
                           <a data-ko-link="image.url" href="">
                             <img data-ko-editable="image.src" border="0" hspace="0" vspace="0" width="166" data-ko-placeholder-height="130" class="mobile-full"
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C130" class="mobile-full"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C130" class="mobile-full"
                               alt="" style="vertical-align:top; width: 100%; height: auto; -ko-attr-width: @imageWidth; max-width: 166px; -ko-max-width: @[imageWidth]px; -ko-attr-alt: @image.alt" />
                           </a>
                         </td>
@@ -609,11 +636,11 @@
   <!-- /sideArticleBlock -->
 
   <!-- singleArticleBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="singleArticleBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="singleArticleBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -623,7 +650,7 @@
             <td width="100%" valign="top" align="left" class="links-color">
               <a data-ko-link="image.url" href="">
                 <img data-ko-editable="image.src" border="0" hspace="0" vspace="0" width="534" data-ko-placeholder-height="200"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=534%2C200" class="mobile-full"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=534%2C200" class="mobile-full"
                   alt="" style="vertical-align:top; max-width:534px; width: 100%; height: auto;
                   -ko-attr-alt: @image.alt" />
               </a>
@@ -655,9 +682,9 @@
               <td valign="top">
                 <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full">
                   <tr>
-                    <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                    <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                       style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                      padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                      padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                       -ko-border-radius: @[buttonStyle.radius]px;
                       -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                       -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color; ">
@@ -677,12 +704,37 @@
   </table>
   <!-- /singleArticleBlock -->
 
-  <!-- TitleBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="titleBlock">
+  <!-- navTitleBlock -->
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="navTitleBlock">
+  <tr>
+  <td style="background-image:url(http://www.innovatingb2b.com/static/body_background.png);background-repeat:no-repeat;background-position:top center;padding-top:150px !important;">
+  <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;background-color: transparent;">
+
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+
+  <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
+        <div class="oldwebkit">
+        <table width="570" border="0" cellpadding="0" cellspacing="9" class="vb-container halfpad"
+          style="width: 100%; max-width: 570px; background-color: transparent;">
+          <tr>
+            <td align="left" style="text-align: left; font-size: 13px; font-family: Arial, Helvetica, sans-serif; color: #3EA0DA;
+              -ko-font-size: @[navStyle.size]px; -ko-font-family: @navStyle.face; -ko-color: @navStyle.color"
+              data-ko-editable="longText" class="long-text links-color">
+              <a href="http://www.innovatingb2b.com/index.php/category/b2b/" target="_blank" rel="noopener">B2B</a> / <a href="http://www.innovatingb2b.com/index.php/category/b2b-marketing/" target="_blank" rel="noopener">Marketing</a> / <a href="http://www.innovatingb2b.com/index.php/category/b2b-innovation/" target="_blank" rel="noopener">Innovation</a> / <a href="http://www.innovatingb2b.com/index.php/category/tech-innovation/" target="_blank" rel="noopener">Tech</a>
+            </td>
+          </tr>
+        </table>
+        </div>
+  <!--[if (gte mso 9)|(lte ie 8)]></td></tr></table><![endif]-->
+      </td>
+    </tr>
+
+    <tr>
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -690,10 +742,41 @@
           style="width: 100%; max-width: 570px; background-color: #ffffff; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
           <tr>
             <td bgcolor="#ffffff" align="center"
-              style="background-color: #ffffff; font-size: 22px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; text-align: center;
+              style="background-color: #ffffff; font-size: 22px; font-family: Arial, Helvetica, sans-serif; text-align: center;
               -ko-attr-align: @bigTitleStyle.align; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;
-              -ko-font-size: @[bigTitleStyle.size]px; -ko-font-family: @bigTitleStyle.face; -ko-color: @bigTitleStyle.color; -ko-text-align: @bigTitleStyle.align">
-              <span data-ko-editable="text">Section Title</span>
+              -ko-font-size: @[bigTitleStyle.size]px; -ko-font-family: @bigTitleStyle.face; -ko-text-align: @bigTitleStyle.align">
+              <a data-ko-link="titleLink.url" data-ko-editable="titleLink.text" href="" target="_blank" style="color: #3f3f3f; text-decoration:none; -ko-color: @bigTitleStyle.color;">Section Title</a>
+            </td>
+          </tr>
+        </table>
+        </div>
+<!--[if (gte mso 9)|(lte ie 8)]></td></tr></table><![endif]-->
+      </td>
+    </tr>
+
+  </table>
+  </td>
+  </tr>
+  </table>
+  <!-- /navTitleBlock -->
+
+  <!-- TitleBlock -->
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="titleBlock">
+    <tr>
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+
+<!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
+        <div class="oldwebkit">
+        <table width="570" border="0" cellpadding="0" cellspacing="9" class="vb-container halfpad" bgcolor="#ffffff"
+          style="width: 100%; max-width: 570px; background-color: #ffffff; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
+          <tr>
+            <td bgcolor="#ffffff" align="center"
+              style="background-color: #ffffff; font-size: 22px; font-family: Arial, Helvetica, sans-serif; text-align: center;
+              -ko-attr-align: @bigTitleStyle.align; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;
+              -ko-font-size: @[bigTitleStyle.size]px; -ko-font-family: @bigTitleStyle.face; -ko-text-align: @bigTitleStyle.align">
+              <a data-ko-link="titleLink.url" data-ko-editable="titleLink.text" href="" target="_blank" style="color: #3f3f3f; text-decoration:none; -ko-color: @bigTitleStyle.color;">Section Title</a>
             </td>
           </tr>
         </table>
@@ -705,11 +788,11 @@
   <!-- /TitleBlock -->
 
   <!-- textBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="textBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="textBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -732,11 +815,11 @@
   <!-- /textBlock -->
 
   <!-- tripleArticleBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="tripleArticleBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="tripleArticleBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -754,7 +837,7 @@
                         <td width="100%" valign="top" align="left" class="links-color" style="padding-bottom: 9px">
                           <a data-ko-link="leftImage.url" href="">
                             <img data-ko-editable="leftImage.src" border="0" hspace="0" vspace="0" width="166" height="90"
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C90" class="mobile-full"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C90" class="mobile-full"
                              alt="" style="vertical-align:top; width: 100%; height: auto; -ko-attr-height: @imageHeight;
                                -ko-attr-alt: @leftImage.alt" />
                           </a>
@@ -778,9 +861,9 @@
                         <td valign="top">
                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
                             <tr>
-                              <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                              <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                                padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                                padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                                 -ko-border-radius: @[buttonStyle.radius]px;
                                 -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                                 -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color; ">
@@ -802,7 +885,7 @@
                         <td width="100%" valign="top" align="left" class="links-color" style="padding-bottom: 9px">
                           <a data-ko-link="middleImage.url">
                             <img data-ko-editable="middleImage.src" border="0" hspace="0" vspace="0" width="166" height="90"
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C90" class="mobile-full"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C90" class="mobile-full"
                               alt="" style="vertical-align:top; width: 100%; height: auto; -ko-attr-height: @imageHeight;
                               -ko-attr-alt: @middleImage.alt" />
                           </a>
@@ -827,9 +910,9 @@
                         <td valign="top">
                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
                             <tr>
-                              <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                              <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                                padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                                padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                                 -ko-border-radius: @[buttonStyle.radius]px;
                                 -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                                 -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color; ">
@@ -851,7 +934,7 @@
                         <td width="100%" valign="top" align="left" class="links-color" style="padding-bottom: 9px">
                           <a data-ko-link="rightImage.url">
                             <img data-ko-editable="rightImage.src" border="0" hspace="0" vspace="0" width="166" height="90"
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C90" class="mobile-full"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C90" class="mobile-full"
                               alt="" style="vertical-align:top; width: 100%; height: auto; -ko-attr-height: @imageHeight;
                               -ko-attr-alt: @rightImage.alt" />
                           </a>
@@ -876,9 +959,9 @@
                         <td valign="top">
                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px">
                             <tr>
-                              <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                              <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                                padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                                padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                                 -ko-border-radius: @[buttonStyle.radius]px;
                                 -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                                 -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color;">
@@ -906,11 +989,11 @@
   <!-- /tripleArticleBlock -->
 
   <!-- doubleArticleBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="doubleArticleBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="doubleArticleBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -928,7 +1011,7 @@
                         <td width="100%" align="left" class="links-color" style="padding-bottom: 9px">
                           <a data-ko-link="leftImage.url">
                             <img data-ko-editable="leftImage.src" border="0" hspace="0" vspace="0" width="258" height="100"
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C100" class="mobile-full"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=258%2C100" class="mobile-full"
                               alt="" style="vertical-align:top; width: 100%; height: auto; -ko-attr-height: @imageHeight;
                               -ko-attr-alt: @leftImage.alt" />
                           </a>
@@ -953,9 +1036,9 @@
                         <td valign="top">
                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px;">
                             <tr>
-                              <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                              <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                                padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                                padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                                 -ko-border-radius: @[buttonStyle.radius]px;
                                 -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                                 -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color; ">
@@ -977,7 +1060,7 @@
                         <td width="100%" valign="top" align="left" class="links-color" style="padding-bottom: 9px">
                           <a data-ko-link="rightImage.url">
                             <img data-ko-editable="rightImage.src" border="0" hspace="0" vspace="0" width="258" height="100"
-                              src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C100" class="mobile-full"
+                              src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=258%2C100" class="mobile-full"
                               alt="" style="vertical-align:top; width: 100%; height: auto; -ko-attr-height: @imageHeight;
                               -ko-attr-alt: @rightImage.alt" />
                           </a>
@@ -1002,9 +1085,9 @@
                         <td valign="top">
                           <table cellpadding="0" border="0" align="left" cellspacing="0" class="mobile-full" style="padding-top: 4px;">
                             <tr>
-                              <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="26"
+                              <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="26"
                                 style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; text-align:center; color: #3f3f3f; font-weight: normal;
-                                padding-left: 18px; padding-right: 18px; background-color: #bfbfbf; border-radius: 4px;
+                                padding-left: 18px; padding-right: 18px; background-color: #efefef; border-radius: 4px;
                                 -ko-border-radius: @[buttonStyle.radius]px;
                                 -ko-attr-bgcolor: @buttonStyle.buttonColor; -ko-background-color: @buttonStyle.buttonColor;
                                 -ko-font-size: @[buttonStyle.size]px; -ko-font-family: @buttonStyle.face; -ko-color: @buttonStyle.color; ">
@@ -1032,11 +1115,11 @@
   <!-- /doubleArticleBlock -->
 
   <!-- hrBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="hrBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="hrBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -1063,11 +1146,11 @@
   <!-- /hrBlock -->
 
   <!-- buttonBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor"  data-ko-block="buttonBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor"  data-ko-block="buttonBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -1079,9 +1162,9 @@
 
               <table cellpadding="0" border="0" align="center" cellspacing="0" class="mobile-full">
                 <tr>
-                  <td width="auto" valign="middle" bgcolor="#bfbfbf" align="center" height="50"
+                  <td width="auto" valign="middle" bgcolor="#efefef" align="center" height="35"
                     style="font-size:22px; font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; font-weight: normal;
-                    padding-left: 14px; padding-right: 14px; background-color: #bfbfbf; border-radius: 4px;
+                    padding-left: 14px; padding-right: 14px; background-color: #efefef; border-radius: 4px;
                     -ko-attr-bgcolor: @bigButtonStyle.buttonColor; -ko-background-color: @bigButtonStyle.buttonColor;
                      -ko-border-radius: @[bigButtonStyle.radius]px;
                     -ko-font-size: @[bigButtonStyle.size]px; -ko-font-family: @bigButtonStyle.face; -ko-color: @bigButtonStyle.color; ">
@@ -1102,7 +1185,7 @@
   <!-- /buttonBlock -->
 
   <!-- imageBlock  -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf" style="background-color: #bfbfbf;
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff;
     -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="imageBlock">
     <tr>
       <td class="vb-outer" valign="top" align="center">
@@ -1115,7 +1198,7 @@
             <td valign="top" align="center">
               <a data-ko-link="image.url" href="" style="text-decoration: none;"><img data-ko-editable="image.src"
                   hspace="0" border="0" vspace="0" width="570" data-ko-placeholder-height="200"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=570%2C200" class="mobile-full"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=570%2C200" class="mobile-full"
                   alt="" style="max-width: 570px; display: block; border-radius: 0px; width: 100%; height: auto; font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px;
                   -ko-font-family: @longTextStyle.face; -ko-color: @longTextStyle.color; -ko-attr-alt: @image.alt;" /></a>
@@ -1128,7 +1211,7 @@
             <td valign="top" align="center">
               <a data-ko-link="image.url" href="" style="text-decoration: none;"><img data-ko-editable="image.src"
                   hspace="0" border="0" vspace="0" width="534" data-ko-placeholder-height="280"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=534%2C280" class="mobile-full"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=534%2C280" class="mobile-full"
                   alt="" style="max-width: 534px; display: block; border-radius: 0px; width: 100%; height: auto; font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px;
                   -ko-font-family: @longTextStyle.face; -ko-color: @longTextStyle.color; -ko-attr-alt: @image.alt;" /></a>
@@ -1143,11 +1226,11 @@
   <!-- imageBlock -->
 
   <!-- doubleImageBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf" style="background-color: #bfbfbf;
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff;
     -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="doubleImageBlock">
     <tr>
-      <td class="vb-outer" align="center" valign="top" bgcolor="#bfbfbf"
-        style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
+      <td class="vb-outer" align="center" valign="top" bgcolor="#ffffff"
+        style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor">
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
         <table data-ko-display="gutterVisible eq false" width="570" class="vb-container fullwidth" cellpadding="0" border="0" bgcolor="#ffffff" align="center"
@@ -1160,7 +1243,7 @@
 <div style="display:inline-block; max-width:285px; vertical-align:top; width:100%; width:100%; " class="mobile-full">
               <a data-ko-link="leftImage.url" href="" style="text-decoration: none;"><img data-ko-editable="leftImage.src"
                   hspace="0" align="left" border="0" vspace="0" width="285" height="180" class="mobile-full"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=285%2C180"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=285%2C180"
                   alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                   -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @leftImage.alt;" /></a>
@@ -1169,7 +1252,7 @@
 <![endif]--><div style="display:inline-block; max-width:285px; vertical-align:top; width:100%; width:100%; " class="mobile-full">
               <a data-ko-link="rightImage.url" href="" style="text-decoration: none;"><img data-ko-editable="rightImage.src"
                   hspace="0" align="right" border="0" vspace="0" width="285" height="180" class="mobile-full"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=285%2C180"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=285%2C180"
                   alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                   -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @rightImage.alt;" /></a>
@@ -1194,7 +1277,7 @@
                     <a data-ko-link="leftImage.url" href="" style="text-decoration: none;">
                       <img data-ko-editable="leftImage.src"
                         hspace="0" align="left" border="0" vspace="0" width="258" height="180"
-                        src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C180" class="mobile-full"
+                        src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=258%2C180" class="mobile-full"
                         alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                         font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                         -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @leftImage.alt;" /></a>
@@ -1211,7 +1294,7 @@
                   <td valign="top">
                     <a data-ko-link="rightImage.url" href="" style="text-decoration: none;"><img data-ko-editable="rightImage.src"
                         hspace="0" align="right" border="0" vspace="0" width="258" height="180"
-                        src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=258%2C180" class="mobile-full"
+                        src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=258%2C180" class="mobile-full"
                         alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                         font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                         -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @rightImage.alt;" /></a>
@@ -1234,7 +1317,7 @@
   <!-- /doubleImageBlock -->
 
   <!--  tripleImageBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf" style="background-color: #bfbfbf;
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff;
     -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="tripleImageBlock">
     <tr>
       <td class="vb-outer" valign="top" align="center" style="">
@@ -1250,7 +1333,7 @@
 <div style="display:inline-block; max-width:190px; vertical-align:top; width:100%; " class="mobile-full">
               <a data-ko-link="leftImage.url" href="" style="text-decoration: none;"><img data-ko-editable="leftImage.src"
                   hspace="0" align="left" border="0" vspace="0" width="190" height="160" class="mobile-full"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=190%2C160"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=190%2C160"
                   alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                   -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @leftImage.alt;" /></a>
@@ -1259,7 +1342,7 @@
 <![endif]--><div style="display:inline-block; max-width:190px; vertical-align:top; width:100%; " class="mobile-full">
               <a data-ko-link="middleImage.url" href="" style="text-decoration: none;"><img data-ko-editable="middleImage.src"
                   hspace="0" align="left" border="0" vspace="0" width="190" height="160" class="mobile-full"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=190%2C160"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=190%2C160"
                   alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                   -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @middleImage.alt;" /></a>
@@ -1268,7 +1351,7 @@
 <![endif]--><div style="display:inline-block; max-width:190px; vertical-align:top; width:100%; " class="mobile-full">
               <a data-ko-link="rightImage.url" href="" style="text-decoration: none;"><img data-ko-editable="rightImage.src"
                   hspace="0" align="right" border="0" vspace="0" width="190" height="160" class="mobile-full"
-                  src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=190%2C160"
+                  src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=190%2C160"
                   alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                   font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                   -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @rightImage.alt;" /></a>
@@ -1292,7 +1375,7 @@
                   <td valign="top">
                     <a data-ko-link="leftImage.url" href="" style="text-decoration: none;"><img data-ko-editable="leftImage.src"
                       hspace="0" align="left" border="0" vspace="0" width="166" height="160"
-                      src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C160" class="mobile-full"
+                      src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C160" class="mobile-full"
                       alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                       font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                       -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @leftImage.alt;" /></a>
@@ -1309,7 +1392,7 @@
                   <td valign="top">
                     <a data-ko-link="middleImage.url" href="" style="text-decoration: none"><img data-ko-editable="middleImage.src"
                       hspace="0" align="left" border="0" vspace="0" width="166" height="160"
-                      src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C160" class="mobile-full"
+                      src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C160" class="mobile-full"
                       alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                       font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                       -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @middleImage.alt;" /></a>
@@ -1326,7 +1409,7 @@
                   <td valign="top">
                     <a data-ko-link="rightImage.url" href="" style="text-decoration: none"><img data-ko-editable="rightImage.src"
                       hspace="0" align="right" border="0" vspace="0" width="166" height="160"
-                      src="http://mosaico.io/srv/f-default/img?method=placeholder&amp;params=166%2C160" class="mobile-full"
+                      src="http://bl.io/srv/f-default/img?method=placeholder&amp;params=166%2C160" class="mobile-full"
                       alt="" style="display: block; border-radius: 0px; width: 100%; height: auto;font-size: 13px;
                       font-family: Arial, Helvetica, sans-serif; color: #3f3f3f; -ko-font-size: @[longTextStyle.size]px; -ko-font-family: @longTextStyle.face;
                       -ko-color: @longTextStyle.color; -ko-attr-height: @imageHeight; -ko-attr-alt: @rightImage.alt;" /></a>
@@ -1349,21 +1432,21 @@
   <!-- /tripleImageBlock -->
 
   <!-- spacerBlock -->
-  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#bfbfbf"
-    style="background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="spacerBlock">
+  <table class="vb-outer" width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor" data-ko-block="spacerBlock">
     <tr>
-      <td class="vb-outer" valign="top" align="center" bgcolor="#bfbfbf" height="24"
-        style="-ko-attr-height: @spacerSize; height: 24px; -ko-height: @[spacerSize]px; background-color: #bfbfbf; -ko-background-color: @externalBackgroundColor;
+      <td class="vb-outer" valign="top" align="center" bgcolor="#ffffff" height="24"
+        style="-ko-attr-height: @spacerSize; height: 24px; -ko-height: @[spacerSize]px; background-color: #ffffff; -ko-background-color: @externalBackgroundColor;
         -ko-attr-bgcolor: @externalBackgroundColor; font-size:1px; line-height: 1px;">&nbsp;</td>
     </tr>
   </table>
   <!-- /spacerBlock -->
 
   <!-- socialBlock -->
-  <table width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#3f3f3f"
-    style="background-color: #3f3f3f; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor"  data-ko-block="socialBlock">
+  <table width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor"  data-ko-block="socialBlock">
     <tr>
-      <td align="center" valign="top" bgcolor="#3f3f3f" style="background-color: #3f3f3f;
+      <td align="center" valign="top" bgcolor="#ffffff" style="background-color: #ffffff;
         -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
 <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
         <div class="oldwebkit">
@@ -1489,33 +1572,30 @@
   </div>
 
   <!-- footerBlock -->
-  <table width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#3f3f3f"
-    style="background-color: #3f3f3f; -ko-background-color: @backgroundColor; -ko-attr-bgcolor: @backgroundColor"  data-ko-block="footerBlock">
+  <table width="100%" cellpadding="0" border="0" cellspacing="0" bgcolor="#ffffff"
+    style="background-color: #ffffff; -ko-background-color: @externalBackgroundColor; -ko-attr-bgcolor: @externalBackgroundColor"  data-ko-block="footerBlock">
     <tr>
-      <td align="center" valign="top" bgcolor="#3f3f3f" style="background-color: #3f3f3f;
-        -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor">
+      <td align="center" valign="top" bgcolor="#ffffff" style="background-color: #ffffff;
+        -ko-attr-bgcolor: @externalBackgroundColor; -ko-background-color: @externalBackgroundColor">
 
-<!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]-->
-        <div class="oldwebkit">
-        <table width="570" style="width: 100%; max-width: 570px" border="0" cellpadding="0" cellspacing="9" class="vb-container halfpad" align="center">
+<!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="700"><tr><td align="center" valign="top"><![endif]-->
+        <div class="oldwebkit" style="width: 100%;max-width: 700px">
+        <table width="700" style="width: 100%; max-width: 700px" border="0" cellpadding="0" cellspacing="9" class="vb-container halfpad" align="center" bgcolor="#ffffff" style="width: 100%; max-width: 700px; background-color: #ffffff; -ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
           <tr>
-            <td data-ko-editable="longText" class="long-text links-color"
-                style="text-align:center; font-size: 13px;color: #919191; font-weight: normal; text-align:center; font-family: Arial, Helvetica, sans-serif;
-                -ko-font-size: @[longTextStyle.size]px; -ko-color: @longTextStyle.color; -ko-font-family: @longTextStyle.face"><p>Email sent to <a href="mailto:[mail]">[mail]</a></p></td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">
-              <a style="text-decoration: underline; color: #ffffff; text-align: center; font-size: 13px;
+            <td style="text-align: center;background-color: #ffffff;-ko-attr-bgcolor: @backgroundColor; -ko-background-color: @backgroundColor;">
+              <p style="text-align: center; font-size: 13px;
                 font-weight: normal; font-family: Arial, Helvetica, sans-serif;
-                -ko-text-decoration: @linkStyle.decoration; -ko-color: @[Color.readability(linkStyle.color, backgroundColor) gt 2 ? linkStyle.color : (Color.isReadable('#ffffff', backgroundColor) ? '#ffffff' : '#000000')]; -ko-font-size: @[linkStyle.size]px; -ko-font-family: @linkStyle.face"
-                href="[unsubscribe_link]"><span data-ko-editable="disiscrivitiText">Unsubscribe</span></a>
-            </td>
-          </tr>
-
-          <tr data-ko-display="_root_.sponsor.visible" style="display: none;text-align:center">
-            <td align="center">
-                <a href="" style="-ko-attr-href: @_root_.sponsor.url;"><img border="0" hspace="0" vspace="0" src="img/sponsor.gif" alt="sponsor"
-                  style="Margin:auto;display:inline !important; -ko-attr-src: @_root_.sponsor.src; -ko-attr-alt: @_root_.sponsor.alt" /></a>
+                -ko-font-size: @[linkStyle.size]px; -ko-font-family: @linkStyle.face">
+                <a style="color: #ffffff; text-decoration: none;
+                  -ko-color: @[Color.readability(linkStyle.color, backgroundColor) gt 2 ? linkStyle.color : (Color.isReadable('#ffffff', backgroundColor) ? '#ffffff' : '#000000')]; -ko-text-decoration: @linkStyle.decoration;"
+                  href="[UNSUBSCRIBE]"><span data-ko-editable="disiscrivitiText">Unsubscribe</span></a>
+                  |
+                <a data-ko-editable="privacyText" href="http://www.innovatingb2b.com/index.php/privacy/" style="
+                  color: #ffffff; text-decoration: none;
+                  -ko-color: @[Color.readability(linkStyle.color, backgroundColor) gt 2 ? linkStyle.color : (Color.isReadable('#ffffff', backgroundColor) ? '#ffffff' : '#000000')]; -ko-text-decoration: @linkStyle.decoration; -ko-attr-href: @privacyLink.url">Privacy Policy</a>
+              </p>
+              <p style="text-align: center; font-size: 12px;
+                font-weight: normal; font-family: Arial, Helvetica, sans-serif; color: #ffffff;-ko-color: @[Color.readability(linkStyle.color, backgroundColor) gt 2 ? linkStyle.color : (Color.isReadable('#ffffff', backgroundColor) ? '#ffffff' : '#000000')];">If an unsubscribe request is sent,<br> the advertiser is required to honor the request within 10 business days.</p>
             </td>
           </tr>
         </table>
